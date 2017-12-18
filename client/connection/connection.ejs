@@ -1,0 +1,54 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign in or Register</title>
+</head>
+
+<body>
+    <div class="form">
+    
+    <div class="connectionError"><% if(connectionError) { %>
+    
+    <%= connectionError %>
+
+    <% }
+    else { %>
+
+    <% } %>
+    </div>
+
+        <h1>You can login</h1>
+        <form action="/connectUser" method="post">
+            <label for="mail">mail:</label>
+            <input type="text" name="mail" id="mail">
+
+            <label for="pass">password :</label>
+            <input type="password" name="pass" id="pass">
+            <button type="submit">Connection</button>
+            <a href="/forgetPassword">Mot de passe oublié ?</a>
+        </form>
+
+        <h2>Or Register</h2>
+
+        <form action="/addUser" method="post">
+            <label for="name">name :</label>
+            <input type="text" name="name" id="name">
+
+            <label for="mail">Mail adress :</label>
+            <input type="email" name="mail" id="mail">
+
+            <label for="pass">password :</label>
+            <input type="password" name="pass" id="pass">
+
+            <label for="retype">retype your password</label>
+            <input type="password" name="retype" id="retype">
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</body>
+
+</html>
