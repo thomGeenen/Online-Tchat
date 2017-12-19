@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <%= mail %>
+    <div class="main">
+        <form action="/forget/recover" method="post">
+            <label for="new-pass">Nouveau mot de passe :</label>
+            <input type="password" name="new-pass" id="new-pass">
+            <label for="new-retype">Retapez votre nouveau mot de passe :</label>
+            <input type="password" name="new-retype" id="new-retype">
+
+            <button type="submit" id="sender" name="sender">Changer mon mot de passe !</button>
+        </form>
+    </div>
+</body>
+</html>

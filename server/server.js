@@ -13,6 +13,8 @@ const http       = require('http'),
       uuid       = require('node-uuid'),
       app        = express();
 
+
+
 //Function to start the server
 function start() {
 
@@ -48,7 +50,13 @@ function start() {
     //Sign in Treatement
     app.post('/addUser', signIn.addUser);
     //Forget password Treatment
-    app.get('/forgetPassword', forget.getForgetView);
+    app.get('/forget', forget.getForgetView);
+    //Recover password path
+    app.get('/recover', forget.getRecover);
+    //Change pass when clicking
+    app.post('/forget/recover', forget.changePasswordByMail);
+
+    app.get('/forget/recover', forget.changePasswordByMail);
 
     
     //Start the server
