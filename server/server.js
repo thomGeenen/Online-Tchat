@@ -11,6 +11,7 @@ const http       = require('http'),
       session    = require('express-session'),
       signIn     = require('./features/sign_in/sign_in'),
       uuid       = require('node-uuid'),
+      cookie     = require('cookie-parser'),
       app        = express();
 
 
@@ -26,37 +27,38 @@ function start() {
     app.use(express.static(path.join('public')));
     //Parse the url 
     app.use(bodyParser.urlencoded({ extended: false }));
-    //Set the cookie to use
+    //Parse the Json 
+    app.use(bodyParser.json());
+    // Set the cookie to use
     app.use(session({
         genid: function(req) {
            return uuid.v1();
         },
-        resave: true,
+        resave: false,
         saveUninitialized: true,
-        cookie : { secure: false },
-        secret: "online_tchat"
+        secret: "sndflsdkfzoenf@nfz"
     }));
 
     ////
     //DISPLAY PATH
     ////
 
-    //Connection path
+    //MAIN PATH
     app.get('/', connection.getConnectionView);
     //Tchat path
     app.get('/tchat', tchat.getTchatView);
-    //Connection Treatment
+    //Connection checking
     app.post('/connectUser', connection.connectUser);
-    //Sign in Treatement
+    //Sign in
     app.post('/addUser', signIn.addUser);
-    //Forget password Treatment
+    //Get the forget view
     app.get('/forget', forget.getForgetView);
-    //Recover password path
-    app.get('/recover', forget.getRecover);
-    //Change pass when clicking
-    app.post('/forget/recover', forget.changePasswordByMail);
-
-    app.get('/forget/recover', forget.changePasswordByMail);
+    //Send the mail to the user
+    app.get('/recover', forget.getRecoverMail);
+    //Get the recover view
+    app.get('/forget/recover/', forget.getRecoverView);
+    //Change the password according to the mail
+    app.post('/forget/recoverMail/', forget.changePassword);
 
     
     //Start the server
