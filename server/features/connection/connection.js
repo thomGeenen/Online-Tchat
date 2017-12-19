@@ -1,9 +1,11 @@
 "use strict";
 
 //Load required middlewares
-const mongoose = require('mongoose'),
-      bcrypt   = require('bcrypt');
 
+const bcrypt = require('bcrypt'),
+      mongoose = require('mongoose'),
+      db       = require('../../conf/database'),
+      User     = mongoose.model('User');
 
 //Function to call the Connection or Sign in View
 function getConnectionView(req,res) {
@@ -12,20 +14,9 @@ function getConnectionView(req,res) {
 //Function that verify if the user already exists
 //And if the mail & the pass matches
 function connectUser(req,res) {
-    //Initialize mongodb
-    mongoose.connect('mongodb://localhost/online_tchat', { useMongoClient: true });
-
-    //Connect mongodb
-    const db = mongoose.connection;
-
-    //Catch connection error
-    db.on('error', console.error.bind(console, 'connection error : '));
-
-    //Call Users collection
-    let Users = db.collection('users');
     
     //Search for the right user
-    Users.findOne({mail : req.body.mail}, (err, user) => {
+    User.findOne({mail : req.body.mail}, (err, user) => {
         //Check if the user is set from the mail
         if (user) {
             //Catch the finder error
@@ -37,7 +28,7 @@ function connectUser(req,res) {
             else {
                 //Compare the entered pass & the db pass
                 bcrypt.compare(req.body.pass, user.pass, (err, result) => {
-                    //If true : password matches
+                    //If true : password matches => connection accepted
                     if (result) {
                         res.render('tchat/tchat.ejs');
                     }
@@ -54,7 +45,6 @@ function connectUser(req,res) {
         } 
     });
 }
-
 
 //Export the functions
 exports.getConnectionView = getConnectionView;

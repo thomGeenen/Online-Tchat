@@ -5,11 +5,11 @@ function getForgetView(req,res) {
 }
 
 
-function changePasswordByMail() {
+function changePasswordByMail(req,res) {
 
 }
 
-function changePasswordByName() {
+function changePasswordByName(req,res) {
 
 }
 

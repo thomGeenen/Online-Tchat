@@ -4,12 +4,12 @@
 const http       = require('http'),
       express    = require('express'),
       path       = require('path'),
-      connection = require('./connection/connection'),
-      tchat      = require('./tchat/tchat'),
-      forget     = require('./forget/forget'),
+      connection = require('./features/connection/connection'),
+      tchat      = require('./features/tchat/tchat'),
+      forget     = require('./features/forget/forget'),
       bodyParser = require('body-parser'),
       session    = require('express-session'),
-      signIn     = require('./sign_in/sign_in'),
+      signIn     = require('./features/sign_in/sign_in'),
       uuid       = require('node-uuid'),
       app        = express();
 
@@ -49,8 +49,7 @@ function start() {
     app.post('/addUser', signIn.addUser);
     //Forget password Treatment
     app.get('/forgetPassword', forget.getForgetView);
-    //Message Treatement
-    app.post('/sendMessage', tchat.sendMessage);
+
     
     //Start the server
     http.createServer(app).listen(8080);
