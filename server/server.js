@@ -1,8 +1,7 @@
 "use strict";
 
 // Load Required Modules
-const express    = require('express'),
-      path       = require('path'),
+const path       = require('path'),
       connection = require('./features/connection/connection'),
       tchat      = require('./features/tchat/tchat'),
       forget     = require('./features/forget/forget'),
@@ -11,9 +10,10 @@ const express    = require('express'),
       signIn     = require('./features/sign_in/sign_in'),
       uuid       = require('node-uuid'),
       cookie     = require('cookie-parser'),
-      app        = express(),
-      server     = require('http').createServer(app),
-      io         = require('socket.io')(server);
+      express    = tchat.express,
+      app        = tchat.app,
+      server     = tchat.server,
+      io         = tchat.io;
 
 
 
@@ -61,26 +61,10 @@ function start() {
     //Change the password according to the mail
     app.post('/forget/recoverMail/', forget.changePassword);
     //Get the post message
-    app.post('/sendMessage', tchat.sendMessage);
-
-    ////
-    //SOCKET EVENTS
-    ////
-
-    io.on('connection', (socket) => {
-
-        socket.emit('new', {hello : "world"});
-
-        socket.on('connect', (data) => {
-            console.log(data);
-        });
-
-        socket.on('clientSend', (data) => {
-            console.log("message : " + data.message + " à : " + data.message_timestamp);
-        });
-    });
+    app.post('/sendMessage', tchat.startSocket);
 
 
+    
     //Start the server
     server.listen(8080);    
 }

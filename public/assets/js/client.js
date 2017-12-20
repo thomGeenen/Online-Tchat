@@ -1,45 +1,50 @@
 "use strict";
 
-const socket = io.connect(),
+const socket = io.connect("http://localhost:8080"),
       olChat = document.getElementsByClassName('chat'),
-      liOther = document.getElementsByClassName('other'),
-      liSelf  = document.getElementsByClassName('self'),
       button  = document.getElementById('sender'),
       messages = document.getElementById('message');
-let   messageVal = "",
-      isSelf     = true;
+let   textarea = document.getElementById('textarea');
+
+let liOther = document.createElement('li');
+liOther.className = "other";
 
 
+let liSelf = document.createElement('li');
+liSelf.className = "self";
 
-//Client receive the message
-socket.on('serverSend', (data) => {
-    
+let rowOne = "<div class='avatar'><img src='https://i.imgur.com/DY6gND0.png' draggable='false'/></div><div class='msg'><p><emoji class='suffocated'/></p><time></time></div >";
+liSelf.innerHTML = rowOne;
+olChat[0].appendChild(liSelf);
+
+
+let rowTwo = "<div class='avatar'><img src='https://i.imgur.com/DY6gND0.png' draggable='false'/></div><div class='msg'><p><emoji class='suffocated'/></p><time></time></div >";
+liOther.innerHTML = rowTwo;
+
+
+socket.on('connection', (data) => {
+    console.log(data);
+})
+
+textarea.addEventListener('keydown', (e) => {
+    if (e.keyCode === 13 || e.which === 13) {
+        socket.emit('clientElement', { elt: textarea.value });
+        console.log(textarea.value);
+    }
 })
 
 
 
 
-//Client send the message
-button.addEventListener('click', (e) => {
-    socket.emit('clientSend', { message: messages.value, message_timestamp: Date() });
-    console.log(messageVal);
-});
 
-button.addEventListener('keypress', (e) => {
-    key = e.which || e.keyCode
-    if (key == 13) {
-        socket.emit('clientSend', { message: messages.value, message_timestamp: Date() });
-        console.log(messageVal);
-    }
-});
+    
 
-let row = "<div class='avatar'><img src='https://i.imgur.com/DY6gND0.png' draggable='false'/></div><div class = 'msg'><p><emoji class='suffocated' /></p><time></time></div >";
-let newLi = document.createElement("li");
 
-if (isSelf) {
-    newLi.className = "self";
-}
-else {
-    newLi.className = "other";
-}
-newLi.innerHTML = row;
+
+
+
+
+
+
+
+

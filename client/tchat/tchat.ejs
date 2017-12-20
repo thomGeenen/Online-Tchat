@@ -34,7 +34,7 @@
     <li class="self">
         <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
 
-      <div class="sg">
+      <div class="msg">
         <p></p>
         <p><emoji class="books"/></p>
         <p></p>
@@ -51,9 +51,11 @@
       </div>
     </li>
   </ol>
-  <form action="/sendMessage" method="post">
-    <input class="message" id="message" name="message" type="text" placeholder="Type here!"/><button id="sender" type="submit">Envoyer</button><div class="emojis"></div>
-  </form>
+  <div>
+      <input class="message" id="textarea" name="textarea" type="text" placeholder="Type here!"/>
+      <button id="sender" type="submit" href="/sendMessage" >Envoyer</button>
+      <div class="emojis"></div>
+  </div>
   <script src="/socket.io/socket.io.js"></script>
   <script src="assets/js/client.js"></script>
       

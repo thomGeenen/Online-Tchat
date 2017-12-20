@@ -15,17 +15,13 @@ function sendMessage(req, res) {
 
 
 function startSocket(req,res) {
+
     io.on('connection', (socket) => {
-
-        socket.on('connect', (data) => {
+       
+        socket.on('clientElement', (data) => {
             console.log(data);
-        });
-
-        socket.on('clientSend', (data) => {
-            console.log("message : " + data.message + " à : " + data.message_timestamp);
-        });
+        })
     });
-    res.render('tchat/tchat.ejs');
 }
 
 exports.getTchatView = getTchatView;
@@ -35,3 +31,5 @@ exports.io = io;
 exports.express = express;
 exports.app = app;
 exports.server = server;
+
+//TODO: Push send-> retrieve input val -> send to server ->  general emit -> recover -> put in dom
