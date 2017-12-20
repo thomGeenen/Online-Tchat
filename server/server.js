@@ -1,8 +1,7 @@
 "use strict";
 
 // Load Required Modules
-const http       = require('http'),
-      express    = require('express'),
+const express    = require('express'),
       path       = require('path'),
       connection = require('./features/connection/connection'),
       tchat      = require('./features/tchat/tchat'),
@@ -12,7 +11,9 @@ const http       = require('http'),
       signIn     = require('./features/sign_in/sign_in'),
       uuid       = require('node-uuid'),
       cookie     = require('cookie-parser'),
-      app        = express();
+      app        = express(),
+      server     = require('http').createServer(app),
+      io         = require('socket.io')(server);
 
 
 
@@ -36,7 +37,7 @@ function start() {
         },
         resave: false,
         saveUninitialized: true,
-        secret: "sndflsdkfzoenf@nfz"
+        secret: "online_tchat"
     }));
 
     ////
@@ -54,15 +55,34 @@ function start() {
     //Get the forget view
     app.get('/forget', forget.getForgetView);
     //Send the mail to the user
-    app.get('/recover', forget.getRecoverMail);
+    app.post('/recover', forget.getRecoverMail);
     //Get the recover view
     app.get('/forget/recover/', forget.getRecoverView);
     //Change the password according to the mail
     app.post('/forget/recoverMail/', forget.changePassword);
+    //Get the post message
+    app.post('/sendMessage', tchat.sendMessage);
 
-    
+    ////
+    //SOCKET EVENTS
+    ////
+
+    io.on('connection', (socket) => {
+
+        socket.emit('new', {hello : "world"});
+
+        socket.on('connect', (data) => {
+            console.log(data);
+        });
+
+        socket.on('clientSend', (data) => {
+            console.log("message : " + data.message + " à : " + data.message_timestamp);
+        });
+    });
+
+
     //Start the server
-    http.createServer(app).listen(8080);
+    server.listen(8080);    
 }
 
 exports.start = start;

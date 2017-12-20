@@ -1,37 +1,9 @@
 [
 	{
-		"_id": "5a38ce7c1518c50b89d5bf29",
-		"name": "jean",
-		"mail": "jean@gmail.com",
-		"pass": "$2a$10$Ekb/I6hSl0mMueMasvzj5ebFl3kU0h/zeq7fiD1WQ2INl4ESa157a",
-		"__v": 0
-	},
-	{
-		"_id": "5a38cea01538bf0ba4cbfddb",
-		"name": "jean",
-		"mail": "jean@gmail.com",
-		"pass": "$2a$10$gTwS4jIJ7N6cNinIRM.TQeMBYOu8EpKIX.YX6jz.2CVRgMzU4x5im",
-		"__v": 0
-	},
-	{
-		"_id": "5a38cf2591327d0bdf3a6d8b",
-		"name": "jean",
-		"mail": "jean@gmail.com",
-		"pass": "$2a$10$si6TLNNb.AnhaUYIgkVt5.7Wjvyjh6p1W5tLH2dKwGov4n1c01/n6",
-		"__v": 0
-	},
-	{
-		"_id": "5a38cf3269462b0bf73a752e",
-		"name": "jean",
-		"mail": "jean@gmail.com",
-		"pass": "$2a$10$2/Gt2iLhWc2fpRJ.nJbS7uc8hoZ6hF6gDDMSyDMHXA3E91fufIkAC",
-		"__v": 0
-	},
-	{
-		"_id": "5a38cfefffba760c501054d1",
-		"name": "jean",
-		"mail": "jean@gmail.com",
-		"pass": "$2a$10$jy2r35JaOuCkqC4DjIh7dejWFJY2bG4zrviyJ26Km27W/bRaYQFsu",
+		"_id": "5a394a2f2d85cf5a48f55ab4",
+		"name": "Thomas",
+		"mail": "thomas.geenen@hotmail.com",
+		"pass": "$2a$10$c2DqV17OltkxKPav9jvHOeQYWnokTYMvUXDuWTaG8yEvtDQ3hPoM2",
 		"__v": 0
 	}
 ]

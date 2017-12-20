@@ -5,10 +5,10 @@ const bcrypt   = require('bcrypt'),
       User     = mongoose.model('User');
 
 //Function that add user in the db 
-function addUser(req, res) {
+function addUser(req,res) {
 
     //Verify that the password is the same as retype
-    if (req.body.pass == req.body.retype) {
+    if (req.body.pass === req.body.retype) {
 
             //Bcrypt Hash Pass runBy10  
             bcrypt.hash(req.body.pass, 10, (err, hash) => {

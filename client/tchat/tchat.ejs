@@ -50,44 +50,12 @@
         <time></time>
       </div>
     </li>
-    <li class="self">
-        <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
-      <div class="msg">
-        <p></p>
-        <p></p>
-        <time></time>
-      </div>
-    </li>
-    <li class="other">
-        <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
-      <div class="msg">
-        <p><emoji class="scream"/></p>
-        <p><emoji class="please"/></p>
-        <time></time>
-      </div>
-    </li>
-    <li class="self">
-        <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
-      <div class="msg">
-        <img src="https://i.imgur.com/QAROObc.jpg" draggable="false"/>
-        <time</time>
-      </div>
-    </li>
-    <li class="other">
-        <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
-      <div class="msg">
-        <p> <emoji class="hearth_blue"/></p>
-        <time></time>
-      </div>
-    </li>
-        <div class="day">Hoy</div>
-    <li class="self">
-        <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
-      <div class="msg">
-        <p></p>
-        <time></time>
-      </div>
-    </li>
   </ol>
-  <input class="textarea" type="text" placeholder="Type here!"/><button id="sender">Envoyer</button><div class="emojis"></div>
+  <form action="/sendMessage" method="post">
+    <input class="message" id="message" name="message" type="text" placeholder="Type here!"/><button id="sender" type="submit">Envoyer</button><div class="emojis"></div>
+  </form>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="assets/js/client.js"></script>
+      
+  
 </body>
