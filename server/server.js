@@ -9,12 +9,11 @@ const path       = require('path'),
       session    = require('express-session'),
       signIn     = require('./features/sign_in/sign_in'),
       uuid       = require('node-uuid'),
-      cookie     = require('cookie-parser'),
-      express    = tchat.express,
-      app        = tchat.app,
-      server     = tchat.server,
-      io         = tchat.io;
-
+      cookie     = require('cookie-parser');
+let   express    = require('express'),
+      app        = express(),
+      server = require('http').Server(app),
+      io = require('socket.io')(server);
 
 
 //Function to start the server
@@ -46,10 +45,10 @@ function start() {
 
     //MAIN PATH
     app.get('/', connection.getConnectionView);
-    //Tchat path
-    app.get('/tchat', tchat.getTchatView);
     //Connection checking
     app.post('/connectUser', connection.connectUser);
+    //Redirect to chat
+    app.get('/tchat', tchat.getTchatView);
     //Sign in
     app.post('/addUser', signIn.addUser);
     //Get the forget view
@@ -61,12 +60,30 @@ function start() {
     //Change the password according to the mail
     app.post('/forget/recoverMail/', forget.changePassword);
     //Get the post message
-    app.post('/sendMessage', tchat.startSocket);
+    app.get('/sendMessage', startSocket);
 
+    function startSocket(req, res) {
 
+        res.render('tchat/tchat.ejs');
+
+        io.sockets.on('connection', (socket) => {
+            console.log("connected");
+            socket.on('clientValue', (message) => {
+                getElement(message.elt);
+            });
+            function getElement(value) {
+                socket.broadcast.emit('otherData', { other : value});
+            }
+        });
+
+        
+
+    }
     
     //Start the server
-    server.listen(8080);    
+    server.listen(8080);
+   
 }
 
 exports.start = start;
+exports.io = io;

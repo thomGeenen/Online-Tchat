@@ -1,50 +1,36 @@
 "use strict";
 
-const socket = io.connect("http://localhost:8080"),
-      olChat = document.getElementsByClassName('chat'),
-      button  = document.getElementById('sender'),
-      messages = document.getElementById('message');
-let   textarea = document.getElementById('textarea');
-
-let liOther = document.createElement('li');
-liOther.className = "other";
+const olChat = document.getElementsByClassName('chat'),
+      button  = document.getElementById('sender');
+let   textarea = document.getElementById('textarea'),
+      socket = io.connect("localhost:8080");
 
 
-let liSelf = document.createElement('li');
-liSelf.className = "self";
+socket.on('otherData', (message) => {
+      let liOther = document.createElement('li');
+      liOther.className = "other";
+      let rowOther = "<div class='avatar'><img src='' draggable='false'/></div><div class='msg'><p>" + message.other + "<emoji class='suffocated'/></p><time>" + Date() + "</time></div >";
+      liOther.innerHTML = rowOther;
+      olChat[0].appendChild(liOther);
+});
 
-let rowOne = "<div class='avatar'><img src='https://i.imgur.com/DY6gND0.png' draggable='false'/></div><div class='msg'><p><emoji class='suffocated'/></p><time></time></div >";
-liSelf.innerHTML = rowOne;
-olChat[0].appendChild(liSelf);
-
-
-let rowTwo = "<div class='avatar'><img src='https://i.imgur.com/DY6gND0.png' draggable='false'/></div><div class='msg'><p><emoji class='suffocated'/></p><time></time></div >";
-liOther.innerHTML = rowTwo;
-
-
-socket.on('connection', (data) => {
-    console.log(data);
-})
-
-textarea.addEventListener('keydown', (e) => {
-    if (e.keyCode === 13 || e.which === 13) {
-        socket.emit('clientElement', { elt: textarea.value });
-        console.log(textarea.value);
-    }
-})
+button.addEventListener('click', (e) => {
+      let liSelf = document.createElement('li');
+      liSelf.className = "self";
+      let rowSelf = "<div class='avatar'><img src='' draggable='false'/></div><div class='msg'><p>" + textarea.value + "<emoji class='suffocated'/></p><time>" + Date() + "</time></div >";
+      liSelf.innerHTML = rowSelf;
+      olChat[0].appendChild(liSelf);
+      socket.emit('clientValue', {elt: textarea.value});
+});
 
 
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
+textarea.addEventListener('keypress', (e) => {
+      if (e.keyCode == 13 || e.which == 13) {
+            let liSelf = document.createElement('li');
+            liSelf.className = "self";
+            let rowSelf = "<div class='avatar'><img src='' draggable='false'/></div><div class='msg'><p>" + textarea.value + "<emoji class='suffocated'/></p><time>" + Date() + "</time></div >";
+            liSelf.innerHTML = rowSelf;
+            olChat[0].appendChild(liSelf);
+            socket.emit('clientValue', { elt: textarea.value });
+      }
+});

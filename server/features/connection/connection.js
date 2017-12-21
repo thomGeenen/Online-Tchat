@@ -6,8 +6,7 @@ const bcrypt = require('bcrypt'),
       mongoose = require('mongoose'),
       db       = require('../../conf/database'),
       User     = mongoose.model('User'),
-      tchat    = require('../tchat/tchat'),
-      io       = tchat.io;
+      tchat    = require('../tchat/tchat');
 
 //Function to call the Connection or Sign in View
 function getConnectionView(req,res) {
@@ -32,17 +31,7 @@ function connectUser(req,res) {
                 bcrypt.compare(req.body.pass, user.pass, (err, result) => {
                     //If true : password matches => connection accepted
                     if (result) {
-                        res.render('tchat/tchat.ejs');
-                        console.log(req.body.message);
-                        io.on('connection', (socket) => {
-                            console.log("connect");
-
-                            socket.on('clientInfo', (data) => {
-                                socket.broadcast.emit('broadcast', {elt:data});
-                            })
-                        });
-
-                        
+                        res.redirect('/tchat');
                     }
                     //Else false : password doesn't matches
                     else {
