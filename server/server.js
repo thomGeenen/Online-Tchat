@@ -44,7 +44,7 @@ function start() {
     ////
 
     //MAIN PATH
-    app.get('/', connection.getConnectionView);
+    app.get('/', startSocket);
     //Connection checking
     app.post('/connectUser', connection.connectUser);
     //Redirect to chat
@@ -67,17 +67,21 @@ function start() {
         res.render('tchat/tchat.ejs');
 
         io.sockets.on('connection', (socket) => {
-            console.log("connected");
+
+            console.log("connect");
+            
             socket.on('clientValue', (message) => {
-                getElement(message.elt);
+                broadcastEmit(message.elt);
             });
-            function getElement(value) {
-                socket.broadcast.emit('otherData', { other : value});
+
+            
+            function broadcastEmit(value) {
+                socket.broadcast.emit('otherData', { other: value });
             }
+            
         });
 
         
-
     }
     
     //Start the server
@@ -86,4 +90,4 @@ function start() {
 }
 
 exports.start = start;
-exports.io = io;
+
